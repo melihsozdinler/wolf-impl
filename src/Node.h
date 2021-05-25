@@ -12,10 +12,15 @@ class Node {
         const std::string ToString() const;
         std::string label;
         uint32_t uniqueId;
+        uint32_t uniqueIdLayer;
         double weight = 1.0;
 
-    friend bool operator== (const Node& lhs, const Node& rhs);
-    friend bool operator!= (const Node& lhs, const Node& rhs);
+    friend bool operator== (const Node& lhs, const Node& rhs){
+        return lhs.uniqueId == rhs.uniqueId;
+    }
+    friend bool operator!= (const Node& lhs, const Node& rhs){
+        return !(lhs.uniqueId == rhs.uniqueId);
+    }
 
     bool operator <(const Node& rhs) const
     {

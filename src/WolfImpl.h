@@ -40,25 +40,25 @@ private:
     int justRunPhase1 = false;
 
 public:
-    void Run(GRAPH<int, int> &G, wolf_list<node> &A, wolf_list<node> B);
+    List<node> Run(GRAPH<int, int> &G);
 
-    void MatrixToGraph(GRAPH<int, int> &G, wolf_list<node> &A, wolf_list<node> &B, matrix<int> &m, bool weighted);
+    void MatrixToGraph(GRAPH<int, int> &G, List<node> &A, List<node> &B, Matrix<int> &m, bool weighted);
 
-    matrix<int> GraphToMatrix(GRAPH<int, int> &G, wolf_list<node> A, wolf_list<node> B, bool weighted);
+    Matrix<int> GraphToMatrix(GRAPH<int, int> &G, List<node> A, List<node> B, bool weighted);
 
 private:
-    void merge(GRAPH<int, int> &G, wolf_list<node> &ptRow, wolf_list<node> &L, wolf_list<node> &R, node owner,
-               wolf_list<node> &alt);
+    void merge(GRAPH<int, int> &G, List<node> &ptRow, List<node> &L, List<node> &R, node owner,
+               List<node> &alt);
 
-    void wolfPhase2(GRAPH<int, int> &G, wolf_list<node> &ptRow, node owner, wolf_list<node> alt);
+    void wolfPhase2(GRAPH<int, int> &G, List<node> &ptRow, node owner, List<node> alt);
 
-    integer crossingNumber(matrix<int> &m);
+    integer crossingNumber(Matrix<int> &m);
 
-    integer crossingNumber(GRAPH<int, int> &G, wolf_list<node> &A, wolf_list<node> &B);
+    integer crossingNumber(GRAPH<int, int> &G, List<node> &A, List<node> &B);
 
-    integer weight(GRAPH<int, int> &G, node alt1, node alt2, node ust, wolf_list<node> alt);
+    integer weight(GRAPH<int, int> &G, node alt1, node alt2, node ust, List<node> alt);
 
-    int getCrossings(GRAPH<int, int> &G, wolf_list<node> &A, wolf_list<node> &B);
+    int getCrossings(GRAPH<int, int> &G, List<node> &A, List<node> &B);
 };
 
 #endif

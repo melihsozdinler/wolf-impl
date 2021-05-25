@@ -18,7 +18,7 @@ public:
     template<class U, class Y>
     NodeArray(GRAPH<U, Y> &graph) {
         for (auto const &nodeTemp : graph.GetAllNodes()) {
-            temp.emplace(nodeTemp,0);
+            temp.insert(std::pair<Node, int>(nodeTemp,0));
         }
     }
 

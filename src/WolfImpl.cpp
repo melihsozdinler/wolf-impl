@@ -1,24 +1,27 @@
 #include "WolfImpl.h"
 
-void WolfImpl::Run(GRAPH<int, int> &G, wolf_list<node> &A, wolf_list<node> B) {
+List<node> WolfImpl::Run(GRAPH<int, int> &G) {
     int i, j, k, neighbourWeight;
     int leftsum = 0, rightsum = 0;
+
+    List<node> A(G.GetLayerNodesA());
+    List<node> B(G.GetLayerNodesB());
 
     node ntemp;
     int min;
     list_item<edge> it, minit;
     edge e;
 
-    wolf_array<node> anB(B.size() + 1);
-    wolf_array<node> partitionOwners(B.size() + 1);
+    Array<node> anB(B.size() + 1);
+    Array<node> partitionOwners(B.size() + 1);
 
-    wolf_array<wolf_list<node> > partitionMembers(B.size() + 1);
+    Array<List<node> > partitionMembers(B.size() + 1);
 
-    wolf_list<node> newA;
-    wolf_list<node> temp, temp2;
-    wolf_list<node> newAA;
+    List<node> newA;
+    List<node> temp, temp2;
+    List<node> newAA;
 
-    wolf_list<edge> elist, elist2;
+    List<edge> elist, elist2;
 
     NodeArray naiB(G);
     NodeArray naiA(G);
@@ -175,15 +178,15 @@ void WolfImpl::Run(GRAPH<int, int> &G, wolf_list<node> &A, wolf_list<node> B) {
         }
     }
 
-    A = newA;
+    return newA;
 }
 
-integer WolfImpl::weight(GRAPH<int, int> &G, node alt1, node alt2, node ust, wolf_list<node> alt) {
+integer WolfImpl::weight(GRAPH<int, int> &G, node alt1, node alt2, node ust, List<node> alt) {
     integer sum = 0;
     int start = 0, end = 0, i;
 
     node n;
-    wolf_list<edge> outedges = G.GetAdjEdges(ust);
+    List<edge> outedges = G.GetAdjEdges(ust);
     edge e;
     NodeArray alt_(G);
 
@@ -217,16 +220,16 @@ integer WolfImpl::weight(GRAPH<int, int> &G, node alt1, node alt2, node ust, wol
     return sum;
 }
 
-int WolfImpl::getCrossings(GRAPH<int, int> &G, wolf_list<node> &A, wolf_list<node> &B) {
-    wolf_list<node> A_, B_;
+int WolfImpl::getCrossings(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
+    List<node> A_, B_;
 
     GRAPH<int, int> G_;
     int i;
     node n, newn, tn, corn, cortn;
     edge e;
-    wolf_array<node> originalA(A.size());
-    wolf_array<node> originalB(B.size());
-    wolf_array<node> A__(A.size()), B__(B.size());
+    Array<node> originalA(A.size());
+    Array<node> originalB(B.size());
+    Array<node> A__(A.size()), B__(B.size());
     NodeArray naiB(G);
 
     i = 0;
@@ -273,8 +276,8 @@ int WolfImpl::getCrossings(GRAPH<int, int> &G, wolf_list<node> &A, wolf_list<nod
     }
 }
 
-void WolfImpl::merge(GRAPH<int, int> &G, wolf_list<node> &ptRow, wolf_list<node> &L, wolf_list<node> &R, node owner,
-           wolf_list<node> &alt) {
+void WolfImpl::merge(GRAPH<int, int> &G, List<node> &ptRow, List<node> &L, List<node> &R, node owner,
+           List<node> &alt) {
     int i = 0, j = 0, k = 0;
     int rsize, lsize;
     integer ul, vl, ur, vr;
@@ -296,7 +299,7 @@ void WolfImpl::merge(GRAPH<int, int> &G, wolf_list<node> &ptRow, wolf_list<node>
             else
                 ownerNext = nil;
             */
-            wolf_list<node> orderuv;
+            List<node> orderuv;
             orderuv.push_back(L[L.GetItem(j)]);
             orderuv.push_back(R[R.GetItem(k)]);
 
@@ -325,7 +328,7 @@ void WolfImpl::merge(GRAPH<int, int> &G, wolf_list<node> &ptRow, wolf_list<node>
 
 }
 
-void WolfImpl::wolfPhase2(GRAPH<int, int> &G, wolf_list<node> &ptRow, node owner, wolf_list<node> alt) {
+void WolfImpl::wolfPhase2(GRAPH<int, int> &G, List<node> &ptRow, node owner, List<node> alt) {
     int size = ptRow.size();
     int half = (int) size / 2;
 
@@ -333,22 +336,22 @@ void WolfImpl::wolfPhase2(GRAPH<int, int> &G, wolf_list<node> &ptRow, node owner
         return;
     } else {
         auto middle = std::next( ptRow.begin(), ptRow.size() / 2 );
-        wolf_list<node> R( ptRow.begin(), middle );
-        wolf_list<node> L( middle, ptRow.end() );
+        List<node> R( ptRow.begin(), middle );
+        List<node> L( middle, ptRow.end() );
         wolfPhase2(G, L, owner, alt);
         wolfPhase2(G, R, owner, alt);
         merge(G, ptRow, L, R, owner, alt);
     }
 }
 
-integer WolfImpl::crossingNumber(matrix<int> &m) {
+integer WolfImpl::crossingNumber(Matrix<int> &m) {
     integer crossingCount = 0, temp;
     int i, j;
     int col, row;
     col = m.dim2();
     row = m.dim1();
     double temp2;
-    matrix<int> mc(row, col);
+    Matrix<int> mc(row, col);
 
     for (i = 0; i < row; i++) {
         mc(i, col - 1) = 0.0;
@@ -377,16 +380,16 @@ integer WolfImpl::crossingNumber(matrix<int> &m) {
     return crossingCount;
 }
 
-integer WolfImpl::crossingNumber(GRAPH<int, int> &G, wolf_list<node> &A, wolf_list<node> &B) {
-    matrix<int> m = GraphToMatrix(G, A, B, true);
+integer WolfImpl::crossingNumber(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
+    Matrix<int> m = GraphToMatrix(G, A, B, true);
     return crossingNumber(m);
 }
 
-void WolfImpl::MatrixToGraph(GRAPH<int, int> &G, wolf_list<node> &A, wolf_list<node> &B, matrix<int> &m, bool weighted) {
+void WolfImpl::MatrixToGraph(GRAPH<int, int> &G, List<node> &A, List<node> &B, Matrix<int> &m, bool weighted) {
     int i, j;
     int k;
     int row = m.dim1(), col = m.dim2();
-    wolf_array<node> A1(row), B1(col);
+    Array<node> A1(row), B1(col);
     edge e;
     node sn, tn;
     A.clear();
@@ -427,10 +430,10 @@ void WolfImpl::MatrixToGraph(GRAPH<int, int> &G, wolf_list<node> &A, wolf_list<n
     }
 }
 
-matrix<int> WolfImpl::GraphToMatrix(GRAPH<int, int> &G, wolf_list<node> A, wolf_list<node> B, bool weighted) {
+Matrix<int> WolfImpl::GraphToMatrix(GRAPH<int, int> &G, List<node> A, List<node> B, bool weighted) {
     int i, j;
     int row = A.size(), col = B.size();
-    matrix<int> m(row, col);
+    Matrix<int> m(row, col);
     NodeArray A1(G);
     NodeArray B1(G);
     weighted = true;

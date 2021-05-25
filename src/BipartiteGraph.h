@@ -35,10 +35,10 @@ public:
         nodeLayerBIdStore = 0;
     }
 
-    Node new_layera_node();
-    Node new_layerb_node();
-    Node new_layera_node(T weight);
-    Node new_layerb_node(T weight);
+    Node new_layera_node() override;
+    Node new_layerb_node() override;
+    Node new_layera_node(T weight) override;
+    Node new_layerb_node(T weight) override;
     Node new_node() override;
     Node new_node(T weight) override;
     List<Node> GetAllNodes() override;
@@ -53,6 +53,15 @@ public:
     }
 
     void clear() {}
+
+
+    List<Node> BipartiteGraph<T,V>::GetLayerNodesA(){
+        return nodes[0];
+    }
+
+    List<Node> BipartiteGraph<T,V>::GetLayerNodesB(){
+        return nodes[1];
+    }
 };
 
 template<class T,class V>

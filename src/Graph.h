@@ -29,6 +29,10 @@ public:
         return Node();
     }
 
+    virtual Node new_layera_node() = 0;
+    virtual Node new_layerb_node() = 0;
+    virtual Node new_layera_node(T weight) = 0;
+    virtual Node new_layerb_node(T weight) = 0;
     virtual Node new_node() = 0;
     virtual Node new_node(T weight) = 0;
     virtual V& operator[](Edge input) = 0;

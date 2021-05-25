@@ -22,7 +22,9 @@ public:
         this->push_back(*iteratorBegin);
     }
 
-    T& operator[](typename std::list<T>::iterator);
+    T& operator[](typename std::list<T>::iterator iter){
+        return *iter;
+    }
 
     size_t Length(){
         return this->size();
@@ -40,8 +42,5 @@ public:
         std::cout << "Implement print here" << std::endl;
     }
 };
-
-template<class T>
-using wolf_list = List<T>;
 
 #endif //WOLF_LIST_H
