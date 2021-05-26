@@ -1,11 +1,8 @@
 #include "WolfImpl.h"
 
-List<node> WolfImpl::Run(GRAPH<int, int> &G) {
+List<node> WolfImpl::Run(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
     int i, j, k, neighbourWeight;
     int leftsum = 0, rightsum = 0;
-
-    List<node> A(G.GetLayerNodesA());
-    List<node> B(G.GetLayerNodesB());
 
     node ntemp;
     int min;
@@ -29,54 +26,51 @@ List<node> WolfImpl::Run(GRAPH<int, int> &G) {
     if (wolfDebug == 1) cout << "\n\nWOLF PH1 STARTS\n---------------------\n";
 
     i = 0;
-    for (auto const& nodeTemp : A) {
+    for (auto const &nodeTemp : A) {
         naiA[nodeTemp] = i++;
     }
 
     if (wolfDebug == 1) {
         cout << "A:\n";
         i = 0;
-        for (auto const& nodeTemp : A) { cout << i << "\t" << nodeTemp.ToString() << "\n"; }
+        for (auto const &nodeTemp : A) { cout << i << "\t" << nodeTemp.ToString() << "\n"; }
         cout << "naiA:\n";
-        for (auto const& nodeTemp : A) { cout << "naiA[" << nodeTemp.ToString() << "]\t" << naiA[nodeTemp] << "\n"; }
+        for (auto const &nodeTemp : A) { cout << "naiA[" << nodeTemp.ToString() << "]\t" << naiA[nodeTemp] << "\n"; }
     }
 
     i = 1;
-    for (auto const& nodeTemp : B)
-    {
+    for (auto const &nodeTemp : B) {
         naiB[nodeTemp] = i;
         anB[i] = nodeTemp;
         i++;
     }
 
-    if (wolfDebug == 1) {
+    if (wolfDebug == 0) {
         cout << "B:\n";
         i = 0;
-        for (auto const& nodeTemp : B)
-        cout << i << "\t" << nodeTemp.ToString() << "\n";
+        for (auto const &nodeTemp : B)
+            cout << i << "\t" << nodeTemp.ToString() << "\n";
         cout << "naiB:\n";
-        for (auto const& nodeTemp : B)
-        cout << "naiB[" << nodeTemp.ToString() << "]\t" << naiB[nodeTemp] << "\n";
+        for (auto const &nodeTemp : B)
+            cout << "naiB[" << nodeTemp.ToString() << "]\t" << naiB[nodeTemp] << "\n";
         cout << "anB:\n";
         for (i = 0; i < B.size() + 1; i++) cout << "anB[" << i << "]\t" << anB[i].ToString() << "\n";
     }
     partitionOwners = anB;
 
 
-    for (auto const& nodeTemp : A)
-    {
+    for (auto const &nodeTemp : A) {
         elist = G.GetAdjEdges(nodeTemp);
         elist2.clear();
         while (elist.size() > 0) {
             min = B.size() * 2;
-            for( list_item<edge> iter= elist.begin(); iter != elist.end(); iter++ )
-            {
+            for (list_item<edge> iter = elist.begin(); iter != elist.end(); iter++) {
                 e = elist[iter];
                 ntemp = G.target(e);
 
                 if (naiB[ntemp] < min) {
                     min = naiB[ntemp];
-                    minit = it;
+                    minit = iter;
                 }
             }
             e = elist[minit];
@@ -87,14 +81,13 @@ List<node> WolfImpl::Run(GRAPH<int, int> &G) {
 
         leftsum = 0;
         rightsum = 0;
-        for(auto const& edgeTemp : elist)
-        {
+        for (auto const &edgeTemp : elist) {
             rightsum += G[edgeTemp];
         }
 
         k = 0;
-        for( list_item<edge> iter= elist.begin(); iter != elist.end(); iter++ )
-        {
+
+        for (list_item<edge> iter = elist.begin(); iter != elist.end(); iter++) {
             e = iter.operator*();
 
             k = naiB[G.target(e)] - 1;
@@ -105,8 +98,8 @@ List<node> WolfImpl::Run(GRAPH<int, int> &G) {
             }
 
             leftsum += G[e];
-            if (/*std::next(it) &&*/ naiB[G.target(e)] + 1 == naiB[G.target(elist[std::next(it)])]) {
-                neighbourWeight = G[elist[std::next(it)]];
+            if (/*std::next(iter) &&*/ naiB[G.target(e)] + 1 == naiB[G.target(elist[std::next(iter)])]) {
+                neighbourWeight = G[elist[std::next(iter)]];
             } else {
                 neighbourWeight = 0;
             }
@@ -117,7 +110,6 @@ List<node> WolfImpl::Run(GRAPH<int, int> &G) {
         }
 
         partitionMembers[k].push_back(nodeTemp);
-
     }
 
     if (wolfDebug == 1) {
@@ -134,14 +126,13 @@ List<node> WolfImpl::Run(GRAPH<int, int> &G) {
 
     if (wolfDebug == 1) {
         j = 0;
-        for(auto const& nodeTemp : A)
-        cout << j++ << " => " << nodeTemp.ToString() << "\t";
+        for (auto const &nodeTemp : A)
+            cout << j++ << " => " << nodeTemp.ToString() << "\t";
     }
 
 
     if (wolfDebug == 1) cout << "0. Part -> ";
-    for(auto const& nodeTemp : partitionMembers[0])
-    {
+    for (auto const &nodeTemp : partitionMembers[0]) {
         //G[n] = naiA[n];
         if (wolfDebug == 1) cout << nodeTemp.ToString() << " ";
         newA.push_back(nodeTemp);
@@ -170,8 +161,7 @@ List<node> WolfImpl::Run(GRAPH<int, int> &G) {
                 cout << "\n";
             }
 
-            for (auto const& nodeTemp : temp)
-            {
+            for (auto const &nodeTemp : temp) {
                 cout << "";
                 newA.push_back(nodeTemp);
             }
@@ -196,8 +186,7 @@ integer WolfImpl::weight(GRAPH<int, int> &G, node alt1, node alt2, node ust, Lis
     }
     */
     i = 0;
-    for (auto const& nodeTemp : alt)
-    {
+    for (auto const &nodeTemp : alt) {
         alt_[n] = i;
         if (nodeTemp == alt1) {
             start = i;
@@ -209,8 +198,7 @@ integer WolfImpl::weight(GRAPH<int, int> &G, node alt1, node alt2, node ust, Lis
     }
 
 
-    for (auto const& edgeTemp : outedges)
-    {
+    for (auto const &edgeTemp : outedges) {
         n = G.target(edgeTemp);
         if (alt_[n] >= start && alt_[n] <= end) {
             sum += (G[edgeTemp]);
@@ -233,8 +221,7 @@ int WolfImpl::getCrossings(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
     NodeArray naiB(G);
 
     i = 0;
-    for (auto const& nodeTemp : A)
-    {
+    for (auto const &nodeTemp : A) {
         newn = G_.new_node();
         A_.push_back(newn);
         A__[i] = newn;
@@ -243,8 +230,7 @@ int WolfImpl::getCrossings(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
     }
 
     i = 0;
-    for (auto const& nodeTemp : B)
-    {
+    for (auto const &nodeTemp : B) {
         newn = G_.new_node();
         B_.push_back(newn);
         B__[i] = newn;
@@ -256,8 +242,7 @@ int WolfImpl::getCrossings(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
     for (i = 0; i < originalA.size(); i++) {
         n = originalA[i];
         corn = A__[i];
-        for (auto const& e : G.GetAdjEdges(n))
-        {
+        for (auto const &e : G.GetAdjEdges(n)) {
             tn = G.target(e);
             cortn = B__[naiB[tn]];
             edge e2 = G_.new_edge(corn, cortn);
@@ -277,7 +262,7 @@ int WolfImpl::getCrossings(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
 }
 
 void WolfImpl::merge(GRAPH<int, int> &G, List<node> &ptRow, List<node> &L, List<node> &R, node owner,
-           List<node> &alt) {
+                     List<node> &alt) {
     int i = 0, j = 0, k = 0;
     int rsize, lsize;
     integer ul, vl, ur, vr;
@@ -335,9 +320,9 @@ void WolfImpl::wolfPhase2(GRAPH<int, int> &G, List<node> &ptRow, node owner, Lis
     if (ptRow.size() == 1 || ptRow.size() == 0) {
         return;
     } else {
-        auto middle = std::next( ptRow.begin(), ptRow.size() / 2 );
-        List<node> R( ptRow.begin(), middle );
-        List<node> L( middle, ptRow.end() );
+        auto middle = std::next(ptRow.begin(), ptRow.size() / 2);
+        List<node> R(ptRow.begin(), middle);
+        List<node> L(middle, ptRow.end());
         wolfPhase2(G, L, owner, alt);
         wolfPhase2(G, R, owner, alt);
         merge(G, ptRow, L, R, owner, alt);
@@ -445,22 +430,19 @@ Matrix<int> WolfImpl::GraphToMatrix(GRAPH<int, int> &G, List<node> A, List<node>
         }
     }
     i = 0;
-    for (auto const& nodeTemp : A)
-    {
+    for (auto const &nodeTemp : A) {
         A1[nodeTemp] = i;
         i++;
     }
 
     i = 0;
-    for (auto const& nodeTemp : B)
-    {
+    for (auto const &nodeTemp : B) {
         B1[nodeTemp] = i;
         i++;
     }
 
     node sn, tn;
-    for (auto const& edgeTemp : G.GetAllEdges())
-    {
+    for (auto const &edgeTemp : G.GetAllEdges()) {
         sn = G.source(edgeTemp);
         tn = G.target(edgeTemp);
 

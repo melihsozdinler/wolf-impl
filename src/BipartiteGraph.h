@@ -48,7 +48,7 @@ public:
     Edge new_edge(const Node source, const Node target) override;
 
     V& operator[](Edge input) override{
-        V param_val = 0;
+        V param_val = input.weight;
         return param_val;
     }
 

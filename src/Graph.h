@@ -20,13 +20,11 @@ class Graph {
 
 public:
     Node source(const Edge e){
-        // TODO
-        return Node();
+        return e.source;
     }
 
     Node target(const Edge e){
-        // TODO
-        return Node();
+        return e.target;
     }
 
     virtual Node new_layera_node() = 0;

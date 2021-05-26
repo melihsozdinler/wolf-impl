@@ -40,7 +40,7 @@ private:
     int justRunPhase1 = false;
 
 public:
-    List<node> Run(GRAPH<int, int> &G);
+    List<node> Run(GRAPH<int, int> &G, List<node> &A, List<node> &B);
 
     void MatrixToGraph(GRAPH<int, int> &G, List<node> &A, List<node> &B, Matrix<int> &m, bool weighted);
 

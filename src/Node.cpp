@@ -5,5 +5,5 @@
 #include "Node.h"
 
 const std::string Node::ToString() const {
-    return "";
+    return std::to_string(this->uniqueId);
 }

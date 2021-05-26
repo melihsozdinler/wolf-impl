@@ -65,12 +65,12 @@ List<Node> BipartiteGraph<T,V>::GetAllNodes() {
 
 template<class T,class V>
 List<Edge> BipartiteGraph<T,V>::GetAllEdges() {
-    return List<Edge>();
+    return List<Edge>(edges);
 }
 
 template<class T,class V>
 List<Edge> BipartiteGraph<T,V>::GetAdjEdges(Node input){
-    return List<Edge>();
+    return List<Edge>(edges);
 }
 
 template<class T,class V>

@@ -24,7 +24,10 @@ int main() {
     std::cout << G[edge] << std::endl;
     NodeArray store(G);
     WolfImpl wolf;
-    List<Node> newAList = wolf.Run(G);
+    List<node> A(G.GetLayerNodesA());
+    List<node> B(G.GetLayerNodesB());
+    List<Node> newAList = wolf.Run(G, A, B);
+    List<Node> newBList = wolf.Run(G, B, newAList);
     store[sourceA1] = 1;
     std::cout << store[sourceA1] << std::endl;
     return 0;
