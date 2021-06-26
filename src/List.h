@@ -31,11 +31,20 @@ public:
     }
 
     typename std::list<T>::iterator Search(const Node n){
+        for (std::list<T>::iterator it = this->begin(); it != this->end(); ++it){
+            if ((*it) == n)
+                return it;
+        }
         return this->end();
     }
 
     typename std::list<T>::iterator GetItem(const int index){
-        return this->end();;
+        int count = 0;
+        for (std::list<T>::iterator it = this->begin(); it != this->end(); ++it, count++){
+            if (count == index)
+                return it;
+        }
+        return this->end();
     }
 
     void Print(){

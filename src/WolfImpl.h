@@ -47,10 +47,10 @@ public:
     Matrix<int> GraphToMatrix(GRAPH<int, int> &G, List<node> A, List<node> B, bool weighted);
 
 private:
-    void merge(GRAPH<int, int> &G, List<node> &ptRow, List<node> &L, List<node> &R, node owner,
+    void merge(GRAPH<int, int> &G, List<node> &ptRow, List<node> &L, List<node> &R, node &owner,
                List<node> &alt);
 
-    void wolfPhase2(GRAPH<int, int> &G, List<node> &ptRow, node owner, List<node> alt);
+    void wolfPhase2(GRAPH<int, int> &G, List<node> &ptRow, node &owner, List<node> alt);
 
     integer crossingNumber(Matrix<int> &m);
 

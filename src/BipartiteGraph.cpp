@@ -70,7 +70,12 @@ List<Edge> BipartiteGraph<T,V>::GetAllEdges() {
 
 template<class T,class V>
 List<Edge> BipartiteGraph<T,V>::GetAdjEdges(Node input){
-    return List<Edge>(edges);
+    List<Edge> edgesTemp;
+    for (std::list<edge>::iterator it = edges.begin(); it != edges.end(); ++it){
+        if ((*it).source == input || (*it).target == input)
+            edgesTemp.push_back((*it));
+    }
+    return edgesTemp;
 }
 
 template<class T,class V>

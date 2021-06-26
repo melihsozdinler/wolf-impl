@@ -88,7 +88,7 @@ List<node> WolfImpl::Run(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
         k = 0;
 
         for (list_item<edge> iter = elist.begin(); iter != elist.end(); iter++) {
-            e = iter.operator*();
+            e = *iter;
 
             k = naiB[G.target(e)] - 1;
 
@@ -261,7 +261,7 @@ int WolfImpl::getCrossings(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
     }
 }
 
-void WolfImpl::merge(GRAPH<int, int> &G, List<node> &ptRow, List<node> &L, List<node> &R, node owner,
+void WolfImpl::merge(GRAPH<int, int> &G, List<node> &ptRow, List<node> &L, List<node> &R, node &owner,
                      List<node> &alt) {
     int i = 0, j = 0, k = 0;
     int rsize, lsize;
@@ -285,8 +285,8 @@ void WolfImpl::merge(GRAPH<int, int> &G, List<node> &ptRow, List<node> &L, List<
                 ownerNext = nil;
             */
             List<node> orderuv;
-            orderuv.push_back(L[L.GetItem(j)]);
-            orderuv.push_back(R[R.GetItem(k)]);
+            orderuv.push_back(*L.GetItem(j));
+            orderuv.push_back(*R.GetItem(k));
 
             int ordering = getCrossings(G, orderuv, alt);
 
@@ -313,7 +313,7 @@ void WolfImpl::merge(GRAPH<int, int> &G, List<node> &ptRow, List<node> &L, List<
 
 }
 
-void WolfImpl::wolfPhase2(GRAPH<int, int> &G, List<node> &ptRow, node owner, List<node> alt) {
+void WolfImpl::wolfPhase2(GRAPH<int, int> &G, List<node> &ptRow, node &owner, List<node> alt) {
     int size = ptRow.size();
     int half = (int) size / 2;
 
