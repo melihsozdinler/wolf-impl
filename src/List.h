@@ -18,7 +18,7 @@ public:
     }
 
     List(typename std::list<T>::iterator iteratorBegin,
-            typename std::list<T>::iterator iteratorEnd) {
+         typename std::list<T>::iterator iteratorEnd) {
         this->push_back(*iteratorBegin);
     }
 

@@ -90,7 +90,7 @@ List<node> WolfImpl::Run(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
         for (list_item<edge> iter = elist.begin(); iter != elist.end(); iter++) {
             e = *iter;
 
-            k = naiB[G.target(e)] - 1;
+            k = naiB[G.target(e)];
 
             rightsum -= G[e];
             if (leftsum >= rightsum) {
@@ -99,7 +99,7 @@ List<node> WolfImpl::Run(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
 
             leftsum += G[e];
             list_item<edge> it = std::next(iter);
-            if (naiB[G.target(e)] + 1 == naiB[G.target(elist[std::next(iter)])]) {
+            if (it._Ptr != NULL && naiB[G.target(e)] + 1 == naiB[G.target(elist[std::next(iter)])]) {
                 neighbourWeight = G[elist[std::next(iter)]];
             } else {
                 neighbourWeight = 0;
@@ -322,8 +322,16 @@ void WolfImpl::wolfPhase2(GRAPH<int, int> &G, List<node> &ptRow, node &owner, Li
         return;
     } else {
         auto middle = std::next(ptRow.begin(), ptRow.size() / 2);
-        List<node> R(ptRow.begin(), middle);
-        List<node> L(middle, ptRow.end());
+
+        List<node> R;
+        for (std::list<Node>::iterator it = ptRow.begin(); it != middle; ++it){
+            R.push_back(*it);
+        }
+        List<node> L;
+        for (std::list<Node>::iterator it = middle; it != ptRow.end(); ++it){
+            L.push_back(*it);
+        }
+
         wolfPhase2(G, L, owner, alt);
         wolfPhase2(G, R, owner, alt);
         merge(G, ptRow, L, R, owner, alt);
