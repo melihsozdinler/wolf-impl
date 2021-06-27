@@ -98,7 +98,8 @@ List<node> WolfImpl::Run(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
             }
 
             leftsum += G[e];
-            if (/*std::next(iter) &&*/ naiB[G.target(e)] + 1 == naiB[G.target(elist[std::next(iter)])]) {
+            list_item<edge> it = std::next(iter);
+            if (naiB[G.target(e)] + 1 == naiB[G.target(elist[std::next(iter)])]) {
                 neighbourWeight = G[elist[std::next(iter)]];
             } else {
                 neighbourWeight = 0;
@@ -234,7 +235,7 @@ int WolfImpl::getCrossings(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
         newn = G_.new_node();
         B_.push_back(newn);
         B__[i] = newn;
-        naiB[n] = i;
+        naiB[nodeTemp] = i;
         originalB[i] = nodeTemp;
         i++;
     }
@@ -246,7 +247,7 @@ int WolfImpl::getCrossings(GRAPH<int, int> &G, List<node> &A, List<node> &B) {
             tn = G.target(e);
             cortn = B__[naiB[tn]];
             edge e2 = G_.new_edge(corn, cortn);
-            // TODO G_[e2] = G[e];
+            G_[e2] = G[e];
         }
     }
 
