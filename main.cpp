@@ -1,7 +1,7 @@
 #include <iostream>
-#include "src/BipartiteGraph.h"
-#include "src/NodeArray.h"
-#include "src/WolfImpl.h"
+#include "src/model/graph/BipartiteGraph.h"
+#include "src/model/combined/NodeArray.h"
+#include "src/model/impl/WolfImpl.h"
 
 int main() {
     BipartiteGraph<int,int> G;

@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "BipartiteGraph.h"
+#include "../graph/BipartiteGraph.h"
 
 template<class T>
 class Array{

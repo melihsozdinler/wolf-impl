@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <list>
-#include "Node.h"
+#include "../graph/Node.h"
 
 template<class T>
 class List : public std::list<T>{

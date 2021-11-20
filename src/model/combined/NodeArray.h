@@ -7,7 +7,7 @@
 
 #include <map>
 
-#include "BipartiteGraph.h"
+#include "../graph/BipartiteGraph.h"
 
 class NodeArray {
 
