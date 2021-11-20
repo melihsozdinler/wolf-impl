@@ -21,11 +21,11 @@
 #ifndef WOLFIMPL_H_
 #define WOLFIMPL_H_
 
-#include "../graph/BipartiteGraph.h"
-#include "../combined/NodeArray.h"
-#include "../basic/List.h"
-#include "../basic/Array.h"
-#include "../combined/Matrix.h"
+#include "../model/graph/BipartiteGraph.h"
+#include "../model/combined/NodeArray.h"
+#include "../model/basic/List.h"
+#include "../model/basic/Array.h"
+#include "../model/combined/Matrix.h"
 
 typedef signed long long int integer;
 
