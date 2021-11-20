@@ -1,6 +1,8 @@
 # C++ Basic Graph and Wolf Algorithm Implementation
 Original implementation of WOLF algorithm is re-implemented with C++ without LEDA dependency. 
 
+![Screenshot](img/example.png)
+
 Reference:
 
 A.O. Cakiroglu, C. Erten, O. Karatas, M. Sozdinler, “Crossing Minimization in Weighted
